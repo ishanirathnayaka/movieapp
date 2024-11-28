@@ -1,19 +1,70 @@
-body{
-  background:#141414 ;
-  color: #ffff;
+body {
+  background: #000; /* Pure black background for better contrast */
+  color: #fff;
+  font-family: Arial, sans-serif;
 }
 
-.movie-app{
-  overflow-x: auto;
-  flex-wrap: nowrap;
+.movie-app {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.image-container{
+.image-container {
   position: relative;
-  transition: transform 0.2s;
+  transition: transform 0.3s ease-in-out;
+  border: 2px solid #333;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.image-container:hover{
+.image-container img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.image-container:hover {
   cursor: pointer;
-  transform: scale(1.1);
+  transform: scale(1.05);
+  border-color: #e50914; /* Highlight border */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  color: #fff;
+}
+
+.image-container:hover .overlay {
+  opacity: 1;
+}
+
+.overlay span {
+  font-size: 16px;
+  font-weight: bold;
+  background: #e50914;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.row .image-container {
+  width: 200px; /* Consistent sizing */
 }
