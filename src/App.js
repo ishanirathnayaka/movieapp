@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import  MovieList from './components/MovieList';
+import MovieList from './components/MovieList';
 import MovieListHeading from './components/MovieListHeading';
 import SearchBox from './components/SearchBox';
 import AddFavourite from './components/AddFavourite';
+import RemoveFavourite from './components/RemoveFavourite';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -12,7 +13,8 @@ function App() {
   const [favourites, setFavourites] = useState([]);
 
   const getMovieRequest = async (searchValue) => {
-    const url = `http://www.omdbapi.com/?s=${encodeURIComponent(searchValue)}&apikey=cc82d72c`;
+    const apiKey = process.env.REACT_APP_OMDB_API_KEY;
+    const url = `http://www.omdbapi.com/?s=${encodeURIComponent(searchValue)}&apikey=${apiKey}`;
 
     const response = await fetch(url);
     const responseJson = await response.json();
@@ -30,6 +32,13 @@ function App() {
 
   const AddFavouriteMovie = (movie) => {
     const newFavouriteList = [...favourites, movie];
+    setFavourites(newFavouriteList);
+  };
+
+  const removeFavouriteMovie = (movie) => {
+    const newFavouriteList = favourites.filter(
+      (favourite) => favourite.imdbID !== movie.imdbID
+    );
     setFavourites(newFavouriteList);
   };
 
@@ -52,8 +61,8 @@ function App() {
       <div className='row'>
         <MovieList
           movies={favourites}
-          handleFavouritesClick={() => {}}
-          favouriteComponent={AddFavourite}
+          handleFavouritesClick={removeFavouriteMovie}
+          favouriteComponent={RemoveFavourite}
         />
       </div>
     </div>
@@ -61,4 +70,5 @@ function App() {
 }
 
 export default App;
+
 
