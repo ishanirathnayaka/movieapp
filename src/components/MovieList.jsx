@@ -1,27 +1,30 @@
 import React from 'react';
 
-const MovieList = ({ movies, handleFavouritesClick, favouriteComponent }) => {
-  const FavouriteComponent = favouriteComponent;
-
+const MovieList = ({ movies, handleFavouritesClick, favouriteComponent: FavouriteComponent }) => {
   return (
     <>
-      {movies.map((movie, index) => (
-        <div
-          className="image-container d-flex justify-content-start m-3"
-          key={index}
-        >
-          <img src={movie.Poster} alt={movie.Title} />
-          <div
-            className="overlay"
-            onClick={() => handleFavouritesClick(movie)}
-          >
-            <span>Add to Favourites ❤️</span>
+      {movies && movies.length > 0 ? (
+        movies.map((movie, index) => (
+          <div className="image-container d-flex justify-content-start m-3" key={index}>
+            <img
+              src={movie.Poster !== 'N/A' ? movie.Poster : 'path/to/fallback-image.jpg'}
+              alt={movie.Title}
+            />
+            <div
+              onClick={() => handleFavouritesClick(movie)}
+              className="overlay d-flex align-items-center justify-content-center"
+            >
+              <FavouriteComponent />
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p>No movies to display.</p>
+      )}
     </>
   );
 };
 
 export default MovieList;
+
 
